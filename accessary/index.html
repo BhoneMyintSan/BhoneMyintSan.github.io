@@ -122,13 +122,13 @@
     <script>
         $(document).ready(function() {
             var totalPrice = 0;
-
+    
             // Event handler for the Add button
             $('#addButton').click(function() {
                 var accessory = $('#accessory').val();
                 var amount = $('#amount').val();
                 var price = calculatePrice(accessory) * amount;
-
+    
                 // Append row to the table
                 $('#productList tbody').append(`
                     <tr>
@@ -138,23 +138,22 @@
                         <td><span class="delete-btn">&times;</span></td>
                     </tr>
                 `);
-
+    
                 // Update total price
                 updateTotalPrice(price);
-
+    
                 // Close the modal
                 $('#addModal').modal('hide');
             });
-
+    
             // Event handler for the Delete button
             $(document).on('click', '.delete-btn', function() {
                 var row = $(this).closest('tr');
                 var price = parseFloat(row.find('td:eq(2)').text().replace('$', ''));
-                totalPrice -= price;
                 row.remove();
                 updateTotalPrice(-price);
             });
-
+    
             // Function to calculate price based on accessory
             function calculatePrice(accessory) {
                 switch (accessory) {
@@ -169,14 +168,14 @@
                         return 0;
                 }
             }
-
+    
             // Function to update total price and VAT
-            function updateTotalPrice(price) {
-                totalPrice += price;
+            function updateTotalPrice(priceChange) {
+                totalPrice += priceChange;
                 $('#totalPrice').text(totalPrice.toFixed(2));
                 calculateVAT();
             }
-
+    
             function calculateVAT() {
                 let vatRate = 0.07;
                 let vatAmount = totalPrice * vatRate;
@@ -186,5 +185,6 @@
             }
         });
     </script>
+    
 </body>
 </html>
